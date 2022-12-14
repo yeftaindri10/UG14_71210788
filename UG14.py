@@ -30,30 +30,32 @@ class Graph:
     def vertex(self):
         #mencetak seluruh vertex
         print("\n== Seluruh Node == ")
-        # tulis kode Anda di sini
         for key in self._data.keys():
             print(key,':',self._data[f"{key}"][1]._value)
-        print()
+        # tulis kode Anda di sini
+        #print()
 
     def addEdge(self, x, y):
         #menambah edge antara vertex x dan y
-        # tulis kode Anda di sini
         if x in self._data and y in self._data:
-            self._data[x].append(y)
-            self._data[y].append(x)
+            self._data[x][0].add(y)
+            #khusus node tidak berarah
+            self._data[y][0].add(x)
+        # tulis kode Anda di sini
         print()
 
     def edge(self):
         print("== Seluruh Edge == ")
         # tulis kode Anda di sini
         listEdge = set()
-        for key, value in self._data.items():
-            for item in self._data[key]:
-                if key+item not in listEdge and item+key not in listEdge:
-                    listEdge.add(key+item)
+        for key in self._data.keys():
+            item = list(self._data[f'{key}'][0])
+            for i in range(len(item)):
+                if key+item[i] not in listEdge and item[i]+key not in listEdge:
+                    listEdge.add(key+item[i])
         listEdge1 = sorted(listEdge)
         for item in listEdge1:
-            print(item,end=' ')
+            print(item, end=" ")
         print("\n")
     
     # untuk pembacaan traversing bfs graph
@@ -67,7 +69,7 @@ class Graph:
         while queue:
             q = queue.pop(0) 
             print (q, end = " ") 
-            for neighbour in self._data[q]:
+            for neighbour in self._data[q][0]:
                 if neighbour not in visited:
                     visited.append(neighbour)
                     queue.append(neighbour)
@@ -79,7 +81,7 @@ graph.addVertex("b", 2)
 graph.addVertex("c", 4)
 graph.addVertex("d", 3)
 graph.addVertex("e", 4)
-graph.addVertex("f",3)
+graph.addVertex("f", 3)
 graph.addVertex("g", 3)
 graph.addVertex("h", 3)
 
